@@ -1,4 +1,4 @@
-const mongoose = require('mongoose')
+const mongoose = require('mongoose').set('debug', true)
 
 const MONGODB_URI = process.env.MONGODB_URI || 'mongodb://localhost/expense-tracker'
 mongoose.connect(MONGODB_URI, { useNewUrlParser: true, useUnifiedTopology: true })

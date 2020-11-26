@@ -1,20 +1,32 @@
-<div class="container mt-5">
-  <div class="row">
-    <h2>請修改你的支出</h2>
+<h2 class="text-center mt-5">請修改你的支出</h2>
+<form action="/record" method="POST" class="container mt-5">
+  <div class="column">
+    <div class="text-danger mt-5">*必填</div>
+    <div class="form-group">
+      <label for="name">名稱<span class="text-danger">*</span></label>
+      <input type="text" class="form-control" name="name" value="{{record.name}}" required>
+    </div>
+    <div class="form-group">
+      <label for="date">日期<span class="text-danger">*</span></label>
+      <input type="date" class="form-control new-date" id="date" name="date" placeholder="日期" value="{{record.date}}"
+        autocomplete="on" required>
+    </div>
+    <div class="form-group">
+      <label for="category">類別<span class="text-danger">*</span></label>
+      <select class="form-control" name="category" value="{{record.category}}">
+        {{#each categories}}
+        <option value="{{this.category}}">
+          {{this.categoryName}}
+        </option>
+        {{/each}}
+      </select>
+    </div>
+    <div class="form-group">
+      <label for="amount">金額<span class="text-danger">*</span></label>
+      <input type="number" class="form-control" name="amount" value="{{record.amount}}" required>
+    </div>
   </div>
-</div>
-<div class="container mt-5">
-  <div class="row">
-    <form action="/records/{{ record._id }}?_method=PUT" method="POST">
-      <div class="form-group">
-        <label for="name">名稱</label>
-        <input type="text" class="form-control" name="name" value="{{ record.name }}" required>
-      </div>
-
-      <div class="container mt-5">
-        <div class="row">
-          <form action="/records/{{ record._id }}?_method=PUT" method="POST">
-            <button type="submit" class="btn btn-primary">送出</button>
-          </form>
-        </div>
-      </div>
+  <form action="/new" method="POST">
+    <button type="submit" class="btn btn-primary">新增支出</button>
+  </form>
+</form>
