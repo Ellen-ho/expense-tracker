@@ -2,8 +2,14 @@ header {
   overflow: hidden;
 }
 
+.navbar {
+  background-color: #cdd1d3;
+}
+
 .navbar .navbar-brand {
   color: #4592af;
+  font-weight: bold;
+  font-size: 38px;
 }
 
 .navbar .navbar-brand:hover {
@@ -17,4 +23,8 @@ header {
 
 .record-list i {
   font-size: 20px;
+}
+
+.total-amount {
+  text-align: center;
 }
