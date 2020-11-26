@@ -4,8 +4,11 @@ const router = express.Router()
 const Category = require('../../models/category')
 const Record = require('../../models/record')
 
-// 首頁-列出所有帳務資料
+// 依據分類輸出帳務資料
 router.get('/', (req, res) => {
+  // 取得目前 category
+  const currentCategory = req.query.currentCategory || 'all'
+
   Promise.all([
     Category.find()
       .lean()
@@ -14,10 +17,30 @@ router.get('/', (req, res) => {
       .lean()
       .sort({ date: 'desc' })
   ]).then((results) => {
+    let records, currentCategoryName, categories
+    // 顯示全部直接回傳完整紀錄
+    if (currentCategory === 'all') {
+      categories = results[0]
+      records = results[1]
+    } else {
+      // 有條件:
+      // 篩選出符合紀錄
+      records = results[1].filter((item) => {
+        return item.category === currentCategory
+      })
+      // 取得對應分類名稱
+      currentCategoryName = getCategoryInfoById(currentCategory, results[0]).categoryName
+      // 去掉目前的選項
+      categories = results[0].filter((item) => {
+        return item.category !== currentCategory
+      })
+    }
+
     return res.render('index', {
-      categories: results[0],
-      records: addCategoryInfo(results[1], results[0]),
-      totalAmount: sumRecordsAmount(results[1])
+      categories: categories,
+      currentCategoryName,
+      records: addCategoryInfo(records, results[0]),
+      totalAmount: sumRecordsAmount(records)
     })
   }).catch((error) => console.log(error))
 })
@@ -32,12 +55,11 @@ function addCategoryInfo (records, categories) {
     const newRecordCategoryId = newRecord[i].category
     newRecord[i] = {
       ...newRecord[i],
-      ...addIconInfo(newRecordCategoryId, categories)
+      ...getCategoryInfoById(newRecordCategoryId, categories)
     }
   }
   return newRecord
 }
-
 // 計算金額總和
 function sumRecordsAmount (records) {
   let totalAmount = 0
@@ -49,7 +71,7 @@ function sumRecordsAmount (records) {
   return totalAmount
 }
 // 返回對應的分類資料
-function addIconInfo (categoryId, categories) {
+function getCategoryInfoById (categoryId, categories) {
   return categories.find((c) => {
     return c.category === categoryId
   })

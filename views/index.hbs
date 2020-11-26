@@ -1,14 +1,17 @@
 <div class="container mt-5">
-  <div class="form-group">
-    <select class="form-control" id="exampleSelect">
-      <option>類別</option>
-      <option>1</option>
-      <option>2</option>
-      <option>3</option>
-      <option>4</option>
-      <option>5</option>
-    </select>
-  </div>
+  <form action="/" method="GET">
+    <div class="form-group">
+      <select class="form-control" name="currentCategory" onchange="this.form.submit()">
+        {{#if currentCategoryName}}<option>{{currentCategoryName}}</option>{{/if}}
+        <option value="all">全部</option>
+        {{#each categories}}
+        <option value="{{this.category}}">
+          {{this.categoryName}}
+        </option>
+        {{/each}}
+      </select>
+    </div>
+  </form>
   <div class="form-group">
     <span>
       總金額:
@@ -21,19 +24,25 @@
     {{#each records}}
     <li class="list-group-item">
       <div class="row">
-        <div class="col-auto mr-auto">
+        <div class="col-lg-2">
           <i class="{{ this.icon }}"></i>
-          <h5 style="vertical-align: middle;">
-            {{ this.name }}
-          </h5>
-          <h6 style="vertical-align: middle;">
-            {{ this.date }}
-          </h6>
         </div>
-        <div>{{ this.amount }}</div>
-        <div class="col-auto">
-          <a class="btn btn-success" href="/records/{{ this._id }}/edit">修改</a>
-          <form action="./records/{{ this._id }}?_method=DELETE" method="POST" style="display: inline;">
+        <div class="col-lg-4 name-date">
+          <div class="name">
+            {{ this.name }}
+          </div>
+          <div class="date">
+            {{ this.date }}
+          </div>
+        </div>
+        <div class="col-lg-3 amount">
+          {{ this.amount }}
+        </div>
+        <div class="col-lg-3 btn-area">
+          <form action="/record/{{ this._id }}?_method=PUT" method="POST" style="display: inline;">
+            <button class="btn btn-success" type="submit">修改</button>
+          </form>
+          <form action="/record/{{ this._id }}?_method=DELETE" method="POST" style="display: inline;">
             <button class="btn btn-danger" type="submit">刪除</button>
           </form>
         </div>

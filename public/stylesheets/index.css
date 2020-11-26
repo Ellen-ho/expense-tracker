@@ -19,12 +19,33 @@ header {
 .total-amount {
   color: rgb(224, 122, 26);
   font-size: 100px;
+  text-align: center;
 }
 
-.record-list i {
+.record-list .row>div {
+  display: flex;
+  justify-content: start;
+  align-items: center;
+}
+
+.record-list .row>div.name-date {
+  flex-direction: column;
+  justify-content: center;
+  align-items: start;
+}
+
+.record-list .row>div.name-date .name {
+  font-size: 40px;
+}
+
+.record-list .row>div.name-date .date {
   font-size: 20px;
 }
 
-.total-amount {
-  text-align: center;
+.record-list .row .amount {
+  font-size: 30px;
+}
+
+.record-list i {
+  font-size: 65px;
 }

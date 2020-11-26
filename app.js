@@ -13,8 +13,8 @@ app.engine('hbs', exphbs({
   defaultLayout: 'main',
   extname: '.hbs',
   helpers: {
-    ifEquals: function (value1, value2) {
-      return value1 === value2
+    ifNotEquals: function (value1, value2) {
+      return value1 !== value2
     }
   }
 }))
