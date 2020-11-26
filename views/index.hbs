@@ -40,7 +40,8 @@
         </div>
         <div class="col-lg-3 btn-area">
           <a class="btn btn-success" href="/record/{{ this._id }}">修改</a>
-          <form action=" /record/{{ this._id }}?_method=DELETE" method="POST" style="display: inline;">
+          <form action=" /record/{{ this._id }}?_method=DELETE" method="POST" onsubmit="return confirm('確定要刪除嗎?')"
+            style="display: inline;">
             <button class="btn btn-danger" type="submit">刪除</button>
           </form>
         </div>
