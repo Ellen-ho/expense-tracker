@@ -1,3 +1,47 @@
 <div class="container mt-5">
-  首頁
+  <div class="form-group">
+    <select class="form-control" id="exampleSelect">
+      <option>類別</option>
+      <option>1</option>
+      <option>2</option>
+      <option>3</option>
+      <option>4</option>
+      <option>5</option>
+    </select>
+  </div>
+  <div class="form-group">
+    <span>
+      總金額:
+    </span>
+    <span class="total-amount">
+      25260 {{totalAmount}}
+    </span>
+  </div>
+  <ul class="list-group">
+    {{#each records}}
+    <li class="list-group-item">
+      <div class="row">
+        <div class="col-auto mr-auto">
+          {{ this.icon }}
+          <h4 style="vertical-align: middle;">
+            {{ this.name }}
+          </h4>
+          <h5 style="vertical-align: middle;">
+            {{ this.date }}
+          </h5>
+        </div>
+        <div>{{ this.amount }}</div>
+        <div class="col-auto">
+          <a class="btn btn-success" href="/records/{{ this._id }}/edit">修改</a>
+          <form action="./records/{{ this._id }}?_method=DELETE" method="POST" style="display: inline;">
+            <button class="btn btn-danger" type="submit">刪除</button>
+          </form>
+        </div>
+      </div>
+    </li>
+    {{/each}}
+  </ul>
+  <div class="text-center">
+    <a href="/record/new" class="btn">新增支出</a>
+  </div>
 </div>
