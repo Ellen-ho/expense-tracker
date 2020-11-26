@@ -1,12 +1,20 @@
 <div class="container mt-5">
   <div class="row">
-    <h2>修改紀錄</h2>
+    <h2>請修改你的支出</h2>
   </div>
 </div>
 <div class="container mt-5">
   <div class="row">
-    <form action="/restaurants/{{ restaurant._id }}?_method=PUT" method="POST">
-      <button type="submit" class="btn btn-primary">更新</button>
-    </form>
-  </div>
-</div>
+    <form action="/records/{{ record._id }}?_method=PUT" method="POST">
+      <div class="form-group">
+        <label for="name">名稱</label>
+        <input type="text" class="form-control" name="name" value="{{ record.name }}" required>
+      </div>
+
+      <div class="container mt-5">
+        <div class="row">
+          <form action="/records/{{ record._id }}?_method=PUT" method="POST">
+            <button type="submit" class="btn btn-primary">送出</button>
+          </form>
+        </div>
+      </div>
