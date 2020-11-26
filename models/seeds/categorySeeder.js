@@ -8,27 +8,27 @@ db.once('open', () => {
     {
       category: 'living',
       categoryName: '家居物業',
-      icon: '<i class="fas fa-home"></i>'
+      icon: 'fas fa-home'
     },
     {
       category: 'traffic',
       categoryName: '交通出行',
-      icon: '<i class="fas fa-shuttle-van"></i>'
+      icon: 'fas fa-shuttle-van'
     },
     {
       category: 'entertainment',
       categoryName: '休閒娛樂',
-      icon: '<i class="fas fa-grin-beam"></i>'
+      icon: 'fas fa-grin-beam'
     },
     {
       category: 'food',
       categoryName: '餐飲食品',
-      icon: '<i class="fas fa-utensils"></i>'
+      icon: 'fas fa-utensils'
     },
     {
       category: 'other',
       categoryName: '其他',
-      icon: '<i class="fas fa-pen"></i>'
+      icon: 'fas fa-pen'
     }
   ).then(() => {
     console.log('category seeder done')

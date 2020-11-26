@@ -5,6 +5,6 @@ const recordSchema = new Schema({
   name: String,
   category: String,
   date: String,
-  amount: Number,
+  amount: Number
 })
 module.exports = mongoose.model('Record', recordSchema)

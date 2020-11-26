@@ -14,15 +14,15 @@
       總金額:
     </span>
     <span class="total-amount">
-      25260 {{totalAmount}}
+      {{totalAmount}}
     </span>
   </div>
-  <ul class="list-group">
+  <ul class="list-group record-list">
     {{#each records}}
     <li class="list-group-item">
       <div class="row">
         <div class="col-auto mr-auto">
-          {{ this.icon }}
+          <i class="{{ this.icon }}"></i>
           <h4 style="vertical-align: middle;">
             {{ this.name }}
           </h4>
