@@ -40,6 +40,7 @@ router.get('/:id', (req, res) => {
       .sort({ _id: 'asc' }),
     Record.findById(id)
       .lean()
+      .sort({ date: 'desc' })
   ]).then((results) => {
     return res.render('edit', { record: results[1], categories: results[0] })
   }).catch((error) => console.log(error))

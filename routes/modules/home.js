@@ -48,20 +48,19 @@ router.get('/', (req, res) => {
 module.exports = router
 
 // 在記帳資料上加上分類資訊
-function addCategoryInfo (records, categories) {
+function addCategoryInfo(records, categories) {
   const newRecord = [...records]
 
   for (let i = 0; i < records.length; i++) {
     const newRecordCategoryId = newRecord[i].category
-    newRecord[i] = {
-      ...newRecord[i],
-      ...getCategoryInfoById(newRecordCategoryId, categories)
-    }
+    const filteredCategoryInfo = getCategoryInfoById(newRecordCategoryId, categories)
+    newRecord[i].categoryName = filteredCategoryInfo.categoryName
+    newRecord[i].icon = filteredCategoryInfo.icon
   }
   return newRecord
 }
 // 計算金額總和
-function sumRecordsAmount (records) {
+function sumRecordsAmount(records) {
   let totalAmount = 0
 
   records.forEach((r) => {
@@ -71,7 +70,7 @@ function sumRecordsAmount (records) {
   return totalAmount
 }
 // 返回對應的分類資料
-function getCategoryInfoById (categoryId, categories) {
+function getCategoryInfoById(categoryId, categories) {
   return categories.find((c) => {
     return c.category === categoryId
   })
