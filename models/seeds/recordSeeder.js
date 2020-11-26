@@ -7,28 +7,42 @@ db.once('open', () => {
   Record.create(
     {
       name: '房租',
-      category: '家居物業',
+      category: 'living',
       date: '2020-01-01',
-      amount: 15000
+      amount: 8000
     },
     {
       name: '加油費',
-      category: '交通出行',
+      category: 'traffic',
       date: '2020-01-03',
       amount: 500
     },
     {
+      name: '換機油',
+      category: 'traffic',
+      date: '2020-01-06',
+      amount: 150
+    },
+    {
       name: '電影票',
-      category: '休閒娛樂',
+      category: 'entertainment',
       date: '2020-01-04',
       amount: 300
     },
     {
       name: '午餐',
-      category: '餐飲食品',
+      category: 'food',
+      date: '2020-01-05',
+      amount: 100
+    },
+    {
+      name: '早餐',
+      category: 'food',
       date: '2020-01-05',
       amount: 60
     }
-  )
-  console.log('record seeder done')
+  ).then(() => {
+    console.log('record seeder done')
+    db.close()
+  })
 })

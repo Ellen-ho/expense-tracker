@@ -6,6 +6,5 @@ const recordSchema = new Schema({
   category: String,
   date: String,
   amount: Number,
-  totalAmount: String,
 })
 module.exports = mongoose.model('Record', recordSchema)
