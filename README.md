@@ -19,7 +19,7 @@
 - 下載專案到本地端
 
   ```
-  git clone https://github.com/Ellen-ho/expense-tracker
+  git clone https://github.com/Ellen-ho/expense-tracker.git
   ```
 
 - 打開終端機進入到下載的資料夾
