@@ -6,8 +6,10 @@ const Record = require('../../models/record')
 
 // 依據分類輸出帳務資料
 router.get('/', (req, res) => {
+  const userId = req.user._id
   // 取得目前 category
   const currentCategory = req.query.currentCategory || 'all'
+
 
   Promise.all([
     Category.find()
