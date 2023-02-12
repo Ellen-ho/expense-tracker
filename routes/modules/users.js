@@ -9,7 +9,7 @@ router.get('/login',(req, res) => {
   res.render('login')
 })
 
-outer.post('/login', passport.authenticate('local', {
+router.post('/login', passport.authenticate('local', {
   successRedirect: '/',
   failureRedirect: '/users/login',
   failureFlash: true
