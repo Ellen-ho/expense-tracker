@@ -3,7 +3,6 @@ const Schema = mongoose.Schema
 
 const recordSchema = new Schema({
   name: String,
-  category: String,
   date: String,
   amount: Number,
   userId: { // 加入關聯設定
