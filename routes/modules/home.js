@@ -15,7 +15,7 @@ router.get('/', (req, res) => {
     Category.find()
       .lean()
       .sort({ _id: 'asc' }),
-    Record.find()
+    Record.find({ userId })
       .lean()
       .sort({ date: 'desc' })
   ]).then((results) => {

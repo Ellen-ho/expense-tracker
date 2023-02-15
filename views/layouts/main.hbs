@@ -19,26 +19,22 @@
             <nav class="navbar navbar-light">
                   <div class="container d-flex justify-content-between">
                         <a class="navbar-brand" href="/">
-                              家庭記帳本
+                        {{#if isAuthenticated}}
+                        {{#if user.name}}
+                        {{user.name}}'s
+                        {{/if}}
+                        {{/if}} 家庭記帳本
                         </a>
-                        <!-- restaurant add-->
-                        <a href="/record/new" class="btn btn-info">新增支出</a>
+                        {{#if isAuthenticated}}
+                        <a href="/users/logout" class="btn btn-info">登出</a>
+                        {{/if}}
+                        </a>
                   </div>
             </nav>
       </header>
 
       <!-- parital templates will replace the part of "body" here -->
-      {{#if isAuthenticated}} 
-              {{#if user.name}} 
-                {{user.name}}'s 
-              {{/if}}
-            {{/if}} 家庭記帳本
-          </a>
-          {{#if isAuthenticated}}
-            <a href="/users/logout" class="btn btn-info">登出</a>
-          {{/if}}
-        </div>
-      </nav>
+      {{{body}}}
 
       <!-- include javascript files here -->
       <script src="/javascripts/jquery-3.3.1.js"></script>

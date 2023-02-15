@@ -17,29 +17,26 @@ router.get('/new', (req, res) => {
 })
 
 // 確認新增
-router.post('/', (req, res) => {
+router.post('/new', (req, res) => {
   const userId = req.user._id
   // 從 req.body 拿出表單裡的資料
-  const options = req.body
-
-  // 建立實例模型
-  const newRecord = new Record(options)
+  const newRecord = req.body
   // 將實例存入資料庫
-  return newRecord.save()
+  return Record.create({ ...newRecord, userId })
     .then(() => res.redirect('/'))
-    .catch((error) => console.log(error))
+    .catch(error => console.log(error))
 })
 
 // 修改頁面
 router.get('/:id', (req, res) => {
   const userId = req.user._id
-  const id = req.params.id
+  const _id = req.params.id
 
   Promise.all([
     Category.find()
       .lean()
       .sort({ _id: 'asc' }),
-    Record.findById(id)
+    Record.findOne({ _id, userId })
       .lean()
       .sort({ date: 'desc' })
   ]).then((results) => {
@@ -50,13 +47,11 @@ router.get('/:id', (req, res) => {
 // 確定修改
 router.put('/:id', (req, res) => {
   const userId = req.user._id
-  const id = req.params.id
-  const options = req.body
-
+  const _id = req.params.id
   // 從資料庫找出相關資料
-  return Record.findById(id)
-    .then((record) => {
-      record = Object.assign(record, options)
+  return Record.findOne({ _id, userId })
+    .then(record => {
+      record = Object.assign(record, req.body)
       return record.save()
     })
     .then(() => res.redirect('/'))
@@ -66,12 +61,12 @@ router.put('/:id', (req, res) => {
 // 確定刪除
 router.delete('/:id', (req, res) => {
   const userId = req.user._id
-  const id = req.params.id
-
-  return Record.findById(id)
-    .then((record) => record.remove())
+  const _id = req.params.id 
+  return Record.findOne({ _id, userId })
+    .then(Record => Record.remove())
     .then(() => res.redirect('/'))
-    .catch((error) => console.log(error))
+    .catch(error => console.log(error))
 })
+
 
 module.exports = router
