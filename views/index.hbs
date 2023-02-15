@@ -1,11 +1,11 @@
 <div class="container mt-5">
   <form action="/" method="GET">
     <div class="form-group">
-      <select class="form-control" name="currentCategory" onchange="this.form.submit()">
+      <select class="form-control" name="currentCategoryId" onchange="this.form.submit()">
         {{#if currentCategoryName}}<option>{{currentCategoryName}}</option>{{/if}}
-        <option value="all">全部</option>
+        <option value="">全部</option>
         {{#each categories}}
-        <option value="{{this.category}}">
+        <option value="{{this._id}}">
           {{this.categoryName}}
         </option>
         {{/each}}
@@ -25,7 +25,7 @@
     <li class="list-group-item">
       <div class="row">
         <div class="col-lg-2">
-          <i class="{{ this.icon }}"></i>
+          <i class="fa-solid {{ this.icon }}"></i>
         </div>
         <div class="col-lg-4 name-date">
           <div class="name">

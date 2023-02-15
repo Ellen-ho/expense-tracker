@@ -8,38 +8,36 @@ const Record = require('../../models/record')
 router.get('/', (req, res) => {
   const userId = req.user._id
   // 取得目前 category
-  const currentCategory = req.query.currentCategory || 'all'
-
+  const currentCategoryId = req.query.currentCategoryId || 'all'
+  const searchConditions = currentCategoryId !== 'all' ? {
+    userId,
+    categoryId: currentCategoryId
+  } : { userId }
 
   Promise.all([
     Category.find()
       .lean()
       .sort({ _id: 'asc' }),
-    Record.find({ userId })
+    Record.find(searchConditions)
       .lean()
       .sort({ date: 'desc' })
   ]).then((results) => {
-    let records, currentCategoryName, categories
+    const records = results[1]
+    let currentCategoryName, categories
     // 顯示全部直接回傳完整紀錄
-    if (currentCategory === 'all') {
+    if (currentCategoryId === 'all') {
       categories = results[0]
-      records = results[1]
     } else {
-      // 有條件:
-      // 篩選出符合紀錄
-      records = results[1].filter((item) => {
-        return item.category === currentCategory
-      })
       // 取得對應分類名稱
-      currentCategoryName = getCategoryInfoById(currentCategory, results[0]).categoryName
+      currentCategoryName = getCategoryInfoById(currentCategoryId, results[0]).categoryName
       // 去掉目前的選項
       categories = results[0].filter((item) => {
-        return item.category !== currentCategory
+        return item._id.toString() !== currentCategoryId
       })
     }
 
     return res.render('index', {
-      categories: categories,
+      categories,
       currentCategoryName,
       records: addCategoryInfo(records, results[0]),
       totalAmount: sumRecordsAmount(records)
@@ -51,14 +49,14 @@ module.exports = router
 
 // 在記帳資料上加上分類資訊
 function addCategoryInfo(records, categories) {
-  const newRecord = [...records]
+  const newRecord = records.map((record) => {
+    const targetCategory = getCategoryInfoById(record.categoryId.toString(), categories)
+    return {
+      ...record,
+      icon: targetCategory.icon
+    }
+  })
 
-  for (let i = 0; i < records.length; i++) {
-    const newRecordCategoryId = newRecord[i].category
-    const filteredCategoryInfo = getCategoryInfoById(newRecordCategoryId, categories)
-    newRecord[i].categoryName = filteredCategoryInfo.categoryName
-    newRecord[i].icon = filteredCategoryInfo.icon
-  }
   return newRecord
 }
 // 計算金額總和
@@ -74,6 +72,6 @@ function sumRecordsAmount(records) {
 // 返回對應的分類資料
 function getCategoryInfoById(categoryId, categories) {
   return categories.find((c) => {
-    return c.category === categoryId
+    return c._id.toString() === categoryId
   })
 }
