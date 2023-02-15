@@ -65,6 +65,7 @@ db.once('open', async () => {
     .genSalt(10)
     .then(salt => bcrypt.hash(SEED_USER.password, salt))
     .then(hash => User.create({
+      name: SEED_USER.name,
       email: SEED_USER.email,
       password: hash
     }))
@@ -72,6 +73,7 @@ db.once('open', async () => {
     Promise.all(SEED_RECORD.map((record) => {
       return Record.create({
         name: record.name,
+        date: record.date,
         amount: record.amount,
         userId: user._id,
         categoryId: categoryIdMapping[record.category]
