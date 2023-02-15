@@ -34,4 +34,6 @@ db.once('open', () => {
     console.log('category seeder done')
     db.close()
   })
+  .catch(console.error)
+  .finally(() => process.exit())
 })

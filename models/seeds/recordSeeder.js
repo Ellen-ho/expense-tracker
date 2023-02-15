@@ -61,7 +61,6 @@ db.once('open', async () => {
     }
   }, {}) 
 
-  console.log(categoryIdMapping)
   const user = await bcrypt
     .genSalt(10)
     .then(salt => bcrypt.hash(SEED_USER.password, salt))
@@ -77,8 +76,11 @@ db.once('open', async () => {
         userId: user._id,
         categoryId: categoryIdMapping[record.category]
       })
-    })).then(() => {
+    }))
+    .then(() => {
       console.log('record seeder done')
       db.close()
     })
+    .catch(console.error)
+    .finally(() => process.exit())
 })
